@@ -2,7 +2,7 @@
 using namespace sf;
 
 int main(int argc, char *argv[]){
-	RenderWindow w(VideoMode(640,480),"Ejemplo de SFML");
+	RenderWindow w(VideoMode(800,600),"Bernardo Zero");
 	Texture t;
 	Sprite s;
 	
