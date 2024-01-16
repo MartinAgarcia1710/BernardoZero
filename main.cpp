@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include "Rafael.h"
 #include "GamePlay.h"
-
+#include "Scene.h"
 int main(int argc, char *argv[]){
 	sf::RenderWindow w(sf::VideoMode(1920, 1080),"Bernardo Zero");
 	w.setFramerateLimit(60);
 	GamePlay game;
+	Scene sce;
 	sf::Texture t;
-	if(!t.loadFromFile("sprites/back.png")){
+	if(!t.loadFromFile("sprites/backPelado.png")){
 		system("echo EROR DE IMAGEN BACK&pause");
 	}
 	
@@ -28,6 +29,7 @@ int main(int argc, char *argv[]){
 		
 		w.clear();
 		w.draw(spr);
+		
 		w.setView(game.getView());
 		game.draw(w);
 		w.display();

@@ -24,7 +24,7 @@ private:
 	sf::Sprite _sp;
 	sf::Texture _tex;
 	sf::Vector2f _speed;
-	
+	float _frame;
 	STATUS _stat;
 };
 

@@ -1,6 +1,7 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 #include "Rafael.h"
+#include "Scene.h"
 #include <SFML/Graphics.hpp>
 
 enum GAME_STATUS{
@@ -18,6 +19,7 @@ private:
 	Rafael _rafa;
 	sf::View _vie;
 	GAME_STATUS _gstat;
+	Scene _sce;
 	
 };
 
