@@ -2,39 +2,80 @@
 #include "Rafael.h"
 #include <SFML/Graphics.hpp>
 
-GamePlay::GamePlay() {
-	_gstat = GAME_STATUS::RUNNING;
-	_vie.setSize(1920, 1080);
-	_vie.setCenter(0,0);
-	
-}
-void GamePlay::cmd(){
-	if(_gstat == GAME_STATUS::RUNNING){
-		_rafa.cmd(_vie);
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)){
-			_gstat = GAME_STATUS::PAUSE;
-		}
-	}else{
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Tab)){
-			_gstat = GAME_STATUS::RUNNING;
-		}
-	}
-	
-}
-void GamePlay::update(sf::RenderWindow & rw){
-	if(_gstat == GAME_STATUS::RUNNING){
-		
-		_rafa.update(rw, _vie);
-		
-	}
-	
-}
-void GamePlay::draw(sf::RenderWindow &w){
-	w.draw(_rafa.getDraw());
-	
-	
+GamePlay::GamePlay(){
+	this->initWindow();
+	this->iniStates();
 }
 
-sf::View GamePlay::getView(){
-	return _vie;
+void GamePlay::updateDeltaTime(){
+	this->_deltaTime = this->_deltaTimeClock.restart().asSeconds();
+}
+
+void GamePlay::updateSFMLEvents(){
+	while(this->_window->pollEvent(this->_sfEvent)){
+		if(this->_sfEvent.type == sf::Event::Closed){
+			this->_window->close();
+		}
+	}
+}
+
+void GamePlay::update(){
+	this->updateSFMLEvents();
+	
+	if(!this->_states.empty()){
+		this->_states.top()->update(this->_deltaTime);
+	}
+}
+
+void GamePlay::render(){
+	this->_window->clear();
+	
+	if(!this->_states.empty()){
+		this->_states.top()->render();
+	}
+	this->_window->display();
+}
+
+void GamePlay::run(){
+	while(this->_window->isOpen()){
+		this->updateDeltaTime();
+		this->update();
+		this->render();
+	}
+}
+
+void GamePlay::initWindow(){
+	std::ifstream ifs("config/win.ini");
+	
+	std::string title = "None";
+	sf::VideoMode window_bounds(800, 600);
+	unsigned framerate_limit = 120;
+	bool vertical_sync_enabled = false;
+	
+	
+	if(ifs.is_open()){
+		std::getline(ifs, title);
+		ifs >> window_bounds.width >> window_bounds.height;
+		ifs >> framerate_limit;
+		ifs >> vertical_sync_enabled;
+	}
+	
+	ifs.close();
+	
+	this->_window = new sf::RenderWindow(window_bounds, title);
+	this->_window->setFramerateLimit(framerate_limit);
+	this->_window->setVerticalSyncEnabled(vertical_sync_enabled);
+}
+
+void GamePlay::iniStates(){
+	this->_states.push(new GameState(this->_window));
+}
+GamePlay::~GamePlay(){
+	delete this->_window;
+	
+	while(!this->_states.empty()){
+		delete this->_states.top();
+		this->_states.pop();
+	}
+	
 }

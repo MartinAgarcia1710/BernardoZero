@@ -22,7 +22,9 @@ void Rafael::cmd(sf::View &v){
 	//&& _sp.getPosition().x >= -626
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && _sp.getPosition().x >= -1370 ){
 		_stat = STATUS::WALK_LEFT;
+		if(_sp.getPosition().x < 500){
 		v.setCenter(_sp.getPosition());
+		}
 		//v.move(_speed.x, _speed.y);
 	}
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)&& _sp.getPosition().x <= 1370 ){

@@ -1,8 +1,8 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
-#include "Rafael.h"
-#include "Scene.h"
-#include <SFML/Graphics.hpp>
+#include "States\GameState.h"
+
+
 
 enum GAME_STATUS{
 	PAUSE,
@@ -11,15 +11,23 @@ enum GAME_STATUS{
 class GamePlay {
 public:
 	GamePlay();
-	void cmd();
-	void update(sf::RenderWindow & rw);
-	void draw(sf::RenderWindow &w);
-	sf::View getView();
+	virtual ~GamePlay();
+	void updateDeltaTime();
+	void updateSFMLEvents();
+	void update();
+	void render();
+	void run();
+	
+	
+	
 private:
-	Rafael _rafa;
-	sf::View _vie;
-	GAME_STATUS _gstat;
-	Scene _sce;
+	sf::RenderWindow *_window;
+	sf::Event _sfEvent;
+	void initWindow();
+	void iniStates();
+	sf::Clock _deltaTimeClock;
+	float _deltaTime;
+	std::stack<State*> _states;
 	
 };
 
