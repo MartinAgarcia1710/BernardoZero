@@ -1,5 +1,6 @@
 #include "GamePlay.h"
 #include "Rafael.h"
+#include "GameState.h"
 #include <SFML/Graphics.hpp>
 
 GamePlay::GamePlay(){
@@ -24,7 +25,16 @@ void GamePlay::update(){
 	
 	if(!this->_states.empty()){
 		this->_states.top()->update(this->_deltaTime);
+		if(this->_states.top()->getQuit()){
+			this->_states.top()->endState();
+			delete this->_states.top();
+			this->_states.pop();
+		}
+	}else{
+		this->endApplication();
+		this->_window->close();
 	}
+	
 }
 
 void GamePlay::render(){
@@ -78,4 +88,8 @@ GamePlay::~GamePlay(){
 		this->_states.pop();
 	}
 	
+}
+
+void GamePlay::endApplication(){
+	std::cout << "Ending App\n";
 }

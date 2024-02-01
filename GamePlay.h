@@ -1,6 +1,6 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
-#include "States\GameState.h"
+#include "GameState.h"
 
 
 
@@ -17,7 +17,7 @@ public:
 	void update();
 	void render();
 	void run();
-	
+	void endApplication();
 	
 	
 private:
