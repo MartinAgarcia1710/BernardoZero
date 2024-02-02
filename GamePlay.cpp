@@ -5,7 +5,9 @@
 
 GamePlay::GamePlay(){
 	this->initWindow();
+	this->initKeys(); 
 	this->iniStates();
+	
 }
 
 void GamePlay::updateDeltaTime(){
@@ -78,7 +80,8 @@ void GamePlay::initWindow(){
 }
 
 void GamePlay::iniStates(){
-	this->_states.push(new GameState(this->_window));
+	this->_states.push(new MainMenuState(this->_window, &this->_supportedKeys));
+	this->_states.push(new GameState(this->_window, &this->_supportedKeys));
 }
 GamePlay::~GamePlay(){
 	delete this->_window;
@@ -92,4 +95,24 @@ GamePlay::~GamePlay(){
 
 void GamePlay::endApplication(){
 	std::cout << "Ending App\n";
+}
+
+void GamePlay::initKeys(){
+	
+	std::ifstream ifs("config/supported_keys.ini");
+	
+	if(ifs.is_open()){
+		std::string key = "";
+		int key_value = 0;
+		while(ifs >> key >> key_value){
+			this->_supportedKeys[key] = key_value;
+			
+		}
+	}
+	
+	ifs.close();
+	
+	for(auto i : this->_supportedKeys){
+		std::cout << i.first << " " << i.second << "\n";
+	}
 }

@@ -1,6 +1,7 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
-#include "GameState.h"
+
+#include "MainMenuState.h"
 
 
 
@@ -23,12 +24,15 @@ public:
 private:
 	sf::RenderWindow *_window;
 	sf::Event _sfEvent;
-	void initWindow();
-	void iniStates();
+	
+	
 	sf::Clock _deltaTimeClock;
 	float _deltaTime;
 	std::stack<State*> _states;
-	
+	std::map<std::string, int> _supportedKeys;
+	void initWindow();
+	void initKeys();
+	void iniStates();
 };
 
 #endif
