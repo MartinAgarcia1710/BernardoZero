@@ -81,7 +81,7 @@ void GamePlay::initWindow(){
 
 void GamePlay::iniStates(){
 	this->_states.push(new MainMenuState(this->_window, &this->_supportedKeys));
-	this->_states.push(new GameState(this->_window, &this->_supportedKeys));
+	//this->_states.push(new GameState(this->_window, &this->_supportedKeys));
 }
 GamePlay::~GamePlay(){
 	delete this->_window;

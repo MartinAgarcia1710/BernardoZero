@@ -1,7 +1,7 @@
 #ifndef MAINMENUSTATE_H
 #define MAINMENUSTATE_H
 #include "GameState.h"
-
+#include "Button.h"
 
 class MainMenuState : public State {
 public:
@@ -11,10 +11,14 @@ public:
 	void render (sf::RenderTarget* target = NULL);
 	void endState();
 	void updateInput(const float& dt);
+	
+	
 private:
 	sf::RectangleShape _background;
+	sf::Font _font;
+	Button* _gameStateButton;
 	void initKeybinds();
-	
+	void initFonts();
 };
 
 #endif

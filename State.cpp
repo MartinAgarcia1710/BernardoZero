@@ -25,3 +25,9 @@ const bool& State::getQuit()const{
 void State::initKeybinds(){
 	
 } 
+
+void State::updateMousePositions(){
+	this->_mousePosScreen = sf::Mouse::getPosition();
+	this->_mousePosWindow = sf::Mouse::getPosition(*this->_window);
+	this->_mousePosView = this->_window->mapPixelToCoords(sf::Mouse::getPosition(*this->_window));
+}
