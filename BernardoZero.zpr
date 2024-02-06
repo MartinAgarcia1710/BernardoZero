@@ -15,7 +15,7 @@ tab_width=4
 tab_use_spaces=0
 explorer_path=.
 inherits_from=
-current_source=Button.cpp
+current_source=MainMenuState.cpp
 path_char=\
 [source]
 path=main.cpp
@@ -25,7 +25,7 @@ path=Rafael.cpp
 cursor=24:24
 [source]
 path=GamePlay.cpp
-cursor=83:3
+cursor=82:77
 open=true
 [source]
 path=GameState.cpp
@@ -41,7 +41,7 @@ path=Entity.cpp
 cursor=13:1
 [source]
 path=MainMenuState.cpp
-cursor=28:40
+cursor=85:4
 open=true
 [source]
 path=Button.cpp
@@ -68,7 +68,7 @@ cursor=3:0
 open=true
 [header]
 path=MainMenuState.h
-cursor=18:10
+cursor=13:7
 open=true
 [header]
 path=Button.h

@@ -11,14 +11,16 @@ public:
 	void render (sf::RenderTarget* target = NULL);
 	void endState();
 	void updateInput(const float& dt);
-	
+	void updateButtons();
+	void renderButtons(sf::RenderTarget* target = NULL);
 	
 private:
 	sf::RectangleShape _background;
 	sf::Font _font;
-	Button* _gameStateButton;
+	std::map<std::string, Button*> _buttons;  
 	void initKeybinds();
 	void initFonts();
+	void initButtons();
 };
 
 #endif

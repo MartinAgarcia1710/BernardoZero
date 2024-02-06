@@ -4,21 +4,27 @@ MainMenuState::MainMenuState(sf::RenderWindow* window, std::map<std::string, int
 	: State(window, supportedKeys){
 	this->initFonts();
 	this->initKeybinds();
-	this->_gameStateButton = new Button(100, 100, 150, 50, &this->_font, "NEW GAME",
-	sf::Color(70,70,70,200),sf::Color(150,150,150,255), sf::Color(20,20,20,200));
+	this->initButtons();
+	
 	this->_background.setSize(sf::Vector2f(window->getSize().x,window->getSize().y));
 	this->_background.setFillColor(sf::Color::Cyan);
 	
 }
 
 MainMenuState::~MainMenuState() {
-	delete this->_gameStateButton;
+	auto it = this->_buttons.begin();
+	for(it = this->_buttons.begin(); it != this->_buttons.end(); ++it){
+		delete it->second;
+	}
+	
 }
 
 void MainMenuState::update (const  float &dt ) {
 	this->updateMousePositions();
 	this->updateInput(dt);
-	this->_gameStateButton->update(this->_mousePosView);
+	
+	this->updateButtons();
+	
 }
 
 void MainMenuState::render (sf::RenderTarget* target) {
@@ -26,7 +32,8 @@ void MainMenuState::render (sf::RenderTarget* target) {
 		target = this->_window;
 	}
 	target->draw(this->_background);
-	this->_gameStateButton->render(target);
+	//this->_gameStateButton->render(target);
+	this->renderButtons(target);
 }
 
 void MainMenuState::endState(){
@@ -60,5 +67,32 @@ void MainMenuState::initKeybinds(){
 void MainMenuState::initFonts(){
 	if(!this->_font.loadFromFile("fonts/Mario-Kart-DS.ttf")){
 		throw("ERROR - MAINMENUSTATE - COULD NOT LOAD FONT FROM FILE");
+	}
+}
+void MainMenuState::initButtons(){
+	this->_buttons["GAME_STATE"] = new Button(100, 100, 150, 50, &this->_font, "New Game",
+		sf::Color(70,70,70,200), sf::Color(150,150,150,255),sf::Color(20,20,20,200));
+	
+	this->_buttons["EXIT_STATE"] = new Button(100, 300, 150, 50, &this->_font, "Quit",
+	    sf::Color(100,100,100,200), sf::Color(150,150,150,255),sf::Color(20,20,20,200));
+}
+
+void MainMenuState::updateButtons(){
+	
+	for(auto &it : this->_buttons){
+		it.second->update(this->_mousePosView);
+	}
+	if(this->_buttons["GAME_STATE"]->isPressed()){
+		//this->_states.push(new MainMenuState(this->_window, &this->_supportedKeys));
+	}
+	if(this->_buttons["EXIT_STATE"]->isPressed()){
+		this->_quit = true;
+	}
+}
+
+void MainMenuState::renderButtons(sf::RenderTarget* target){
+	
+	for(auto &it : this->_buttons){
+		it.second->render(target);
 	}
 }
